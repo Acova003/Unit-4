@@ -32,5 +32,14 @@ public class NoteServiceImpl {
         Optional<Note> noteOptional = noteRepository.findById(noteId);
         noteOptional.ifPresent(note -> noteRepository.delete(note));
     }
+
+    @Transactional
+    public void updateNoteById(NoteDto noteDto) {
+        Optional<Note> noteOptional = noteRepository.findById(noteDto.getId());
+        noteOptional.ifPresent(note -> {
+            note.setBody(noteDto.getBody());
+            noteRepository.saveAndFlush(note);
+        });
+    }
     
 }
