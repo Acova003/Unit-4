@@ -15,13 +15,12 @@ import com.devmountain.noteApp.entites.User;
 import com.devmountain.noteApp.repositories.UserRepository;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl {
     @Autowired
     private UserRepository userRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @Override
     @Transactional
     public List<String> addUser(UserDto userDto) {
         List<String> response = new ArrayList<>();
@@ -31,10 +30,20 @@ public class UserServiceImpl implements UserService {
         return response;
     }
 
-    @Override
     public List<String> userLogin(UserDto userDto) {
         List<String> response = new ArrayList<>();
-        Optional<User> userOptional = userRepository.findByUsername(userDto.getUsername());
+        Optional<User> userOtional = userRepository.findByUsername(userDto.getUsername());
+        if (userOptional.isPresent()){
+            if (passwordEncoder.matches(userDto.getPassword(), userOptional.get().getPassword())){
+                response.add("http://localhost:8080/home.html");
+                response.add(String.valueOf(userOptional.get().getId()));
+            } else {
+                response.add("Username or password incorrect");
+            }
+        } else {
+            response.add("Username or password incorrect");
+        }
+        return response;
     }
     
 }
