@@ -26,5 +26,11 @@ public class NoteServiceImpl {
         noteRepository.saveAndFlush(note);
 
     }
+
+    @Transactional
+    public void deleteNoteById(Long noteId) {
+        Optional<Note> noteOptional = noteRepository.findById(noteId);
+        noteOptional.ifPresent(note -> noteRepository.delete(note));
+    }
     
 }
