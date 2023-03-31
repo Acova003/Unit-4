@@ -15,7 +15,7 @@ import com.devmountain.noteApp.entites.User;
 import com.devmountain.noteApp.repositories.UserRepository;
 
 @Service
-public class UserServiceImpl {
+public class UserServiceImpl implements UserService{
     @Autowired
     private UserRepository userRepository;
     @Autowired
