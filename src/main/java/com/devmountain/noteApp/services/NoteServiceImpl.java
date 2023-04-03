@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 
 @Service
-public class NoteServiceImpl {
+public class NoteServiceImpl implements NoteService{
     @Autowired
     private UserRepository userRepository;
     @Autowired
